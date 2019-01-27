@@ -28,6 +28,7 @@ def about(request):
     print(request.user)
     return render(request, 'rango/about.html', {})
 
+
 def show_category(request, category_name_slug):
     # Create a dictionary which we can pass
     # to the template rendering engine.
@@ -51,7 +52,7 @@ def show_category(request, category_name_slug):
         # from the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
-    except:
+    except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything -
         # the template will display the 'no category' message for us.
@@ -60,7 +61,7 @@ def show_category(request, category_name_slug):
 
     # Go render the response and return it to the client
     return render(request, 'rango/category.html', context_dict)
-    #return HttpResponseRedirect(reverse('show_category', args='(",)'))
+
 
 def add_category(request):
     form = CategoryForm()
@@ -86,6 +87,7 @@ def add_category(request):
     # Will handle the bad form, new form, or no form supplied cases.
     # Render the form with error messages (if any)
     return render(request, 'rango/add_category.html', {'form': form})
+
 
 
 def add_page(request, category_name_slug):
