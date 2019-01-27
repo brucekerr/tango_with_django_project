@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from rango.models import Category
 from rango.models import Page
 from rango.forms import CategoryForm, PageForm
+from django.urls import reverse
 
 
 def index(request):
@@ -18,11 +19,14 @@ def index(request):
 
     # Render the response and send it back
     return render(request, 'rango/index.html', context=context_dict)
+    #return HttpResponseRedirect(reverse('show_category', args=('',)))
 
 def about(request):
-    context_dict = {'boldmessage': "This tutorial has been put together by Bruce."}
-
-    return render(request, 'rango/about.html', context=context_dict)
+    # Prints out whether the method is a GET or a POST
+    print(request.method)
+    # Prints out the use name, if no one is logged in it prints 'AnonymousUser'
+    print(request.user)
+    return render(request, 'rango/about.html', {})
 
 def show_category(request, category_name_slug):
     # Create a dictionary which we can pass
@@ -56,6 +60,7 @@ def show_category(request, category_name_slug):
 
     # Go render the response and return it to the client
     return render(request, 'rango/category.html', context_dict)
+    #return HttpResponseRedirect(reverse('show_category', args='(",)'))
 
 def add_category(request):
     form = CategoryForm()
