@@ -173,6 +173,7 @@ def register(request):
                    'registerd': registered})
 
 def user_login(request):
+    error = None
     # If the request is a HTTP POST, try to pull out the relevent information.
     if request.method == 'POST':
         # Gather the username and password provided by the user.
@@ -212,7 +213,7 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, 'rango/login.html', {})
+        return render(request, 'rango/login.html', {'error' : error})
 
 @login_required
 def restricted(request):
