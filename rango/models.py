@@ -38,4 +38,4 @@ class UserProfile(models.Model):
 
     # Override the __unicode__() method to return out something meanful!
     def __str__(self):
-        return self.user.name
+        return self.user.username
